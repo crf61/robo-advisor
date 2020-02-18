@@ -29,3 +29,7 @@
     Create file called requirements.txt and insert the below contents
     #requests
     #python-dotenv
+# Install packages in terminal
+    Enter "pip install -r requirements.txt" in terminal
+# RUN   
+   Enter "python app/robo_advisor.py" to run the code
