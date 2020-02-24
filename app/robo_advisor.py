@@ -1,7 +1,9 @@
 # app/robo_advisor.py
 
-import requests
+import csv
 import json
+
+import requests
 import os
 from dotenv import load_dotenv
 
@@ -57,11 +59,24 @@ x = datetime.datetime.now ()
 def to_usd(my_price):
     return "${0:,.2f}".format(my_price)
 
+#taken from module folder
+
+csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
+
+
+with open(csv_file_path, "w") as csv_file: 
+    writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
+    writer.writeheader() # uses fieldnames set above
+    writer.writerow({"city": "New York", "name": "Yankees"})
+    writer.writerow({"city": "New York", "name": "Mets"})
+    writer.writerow({"city": "Boston", "name": "Red Sox"})
+    writer.writerow({"city": "New Haven", "name": "Ravens"})
+
 
 print("-------------------------")
 print("SELECTED SYMBOL: XYZ")
 print("-------------------------")
-print("REQUESTING STOCK MARKET DATA...")
+print("REQUESTING STOCK MARKET DATA")
 print("REQUEST AT:", x)
 print("-------------------------")
 print(f"LATEST DAY: {lastest_refreshed}")
@@ -72,5 +87,8 @@ print("-------------------------")
 print("RECOMMENDATION: BUY!")
 print("RECOMMENDATION REASON: TODO")
 print("-------------------------")
+print(f"WRITING DATA TO CSV: {csv_file_path}...")
+print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
+
