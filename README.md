@@ -16,23 +16,16 @@
 
 # Where are we getting the code from?
 
-    The code is taken from "https://www.alphavantage.co/documentation" 
+    The code is taken from "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}" 
+    
+    In order to see the directory of items that comes from a certain link, we need to have a symbol and an API Key.
+# Entering Dynamic Fields - Symbol
 
-    In order to see the directory of items that comes from a certain link, enter the code below
+    Symbol is the same as a ticker. For example, entering TSLA in the NYSE will give us information for Tesla such as closing, open, high and low.
 
-    print(type(response))
-    #print(dir(response))
+    The program will require that the user enters the ticker so they can see the information they want.
 
-    print(response.status_code)
-    print(response.text)
-    print(type(response.text))
+# DONE
 
-    parsed_response = json.loads(response.text)
-    print(type(parsed_response))
-    #print(parsed_response["name"])
+    The program will spit out a recommendation for you to either buy or sell the stock
 
-    for d in parsed_response:
-    print(d["id"],d["name"])
-
-    first_prod = parsed_response[0]
-    print(first_prod["name"])

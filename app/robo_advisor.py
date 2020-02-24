@@ -10,8 +10,8 @@ from dotenv import load_dotenv
 
 print("REQUESTING SOME DATA FROM THE INTERNET...")
 
-API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default="oops") # "20YMD7USKUACWDVE"
-symbol = "TSLA"
+API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default="oops") # "1N162NXV71A8C5LM"
+symbol = input("PLEASE ENTER A SYMBOL OR TICKER ")
 
 request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}"
 print ("URL:", request_url)
@@ -37,9 +37,10 @@ parsed_response = json.loads(response.text)
 
 tsd = parsed_response["Time Series (Daily)"]
 dates = list(tsd.keys())
-lastest_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
-lastest_day = dates[0]
-lastest_close = tsd[lastest_day]["4. close"]
+latest_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
+latest_day = dates[0]
+latest_close = tsd[latest_day]["4. close"]
+latest_open = tsd[latest_day]["1. open"]
 high_prices = []
 low_prices = []
 
@@ -79,19 +80,28 @@ with open(csv_file_path, "w") as csv_file:
         "volume": daily_prices["5. volume"],
     })
 
+x = float(latest_close)
+y = float(latest_open)
+if x >= y:
+    recommendation = "BUY"
+    recommendation_reason = "The price of the stock increased. Things look good."
+else:
+    recommendation = "I RECOMMEND YOU PASS ON THIS INVESTMENT."
+    recommendation_reason = "LATEST OPEN IS LOWER THAN YESTERDAY. THE STOCK MAY NOT BE DOING WELL RIGHT NOW."
+
 print("-------------------------")
-print("SELECTED SYMBOL: XYZ")
+print("SELECTED SYMBOL:", symbol)
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA")
 print("REQUEST AT:", x)
 print("-------------------------")
-print(f"LATEST DAY: {lastest_refreshed}")
-print(f"LATEST CLOSE: {to_usd(float(lastest_close))}")
+print(f"LATEST DAY: {latest_refreshed}")
+print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("-------------------------")
-print("RECOMMENDATION: BUY!")
-print("RECOMMENDATION REASON: TODO")
+print("RECOMMENDATION:" + recommendation)
+print("RECOMMENDATION REASON:" + recommendation_reason)
 print("-------------------------")
 print(f"WRITING DATA TO CSV: {csv_file_path}...")
 print("-------------------------")
