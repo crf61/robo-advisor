@@ -16,6 +16,9 @@ symbol = input("PLEASE ENTER A SYMBOL OR TICKER ")
 request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}"
 print ("URL:", request_url)
 
+if (symbol.isalpha) == False:
+    print("ERROR. THE SYMBOL IS INVALID.")
+    exit()
 
 response = requests.get(request_url)
 #print(type(response))
