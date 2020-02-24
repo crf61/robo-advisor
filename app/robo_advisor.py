@@ -16,25 +16,29 @@ print ("URL:", request_url)
 
 
 response = requests.get(request_url)
-print(type(response))
+#print(type(response))
 #print(dir(response))
 
-print(response.status_code)
-print(response.text)
-print(type(response.text))
+#print(response.status_code)
+#print(response.text)
+#print(type(response.text))
 
 parsed_response = json.loads(response.text)
-print(type(parsed_response))
+#print(type(parsed_response))
 #print(parsed_response["name"])
 
-for d in parsed_response:
-    print(d["id"],d["name"])
+#for d in parsed_response:
+#print(d["id"],d["name"])
  
-first_prod = parsed_response[0]
-print(first_prod["name"])
+#first_prod = parsed_response[0]
+#print(first_prod["name"])
 
+tsd = parsed_response["Time Series (Daily)"]
+dates = list(tsd.keys())
 lastest_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
-lastest_close = parsed_response["Time Series (Daily)"]["2019-02-22"]["4. close"]
+lastest_day = dates[0]
+lastest_close = tsd[lastest_day]["4. close"]
+
 
 import datetime
 x = datetime.datetime.now ()
