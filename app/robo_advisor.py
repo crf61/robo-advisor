@@ -29,33 +29,29 @@ print(type(parsed_response))
 
 for d in parsed_response:
     print(d["id"],d["name"])
-
+ 
 first_prod = parsed_response[0]
 print(first_prod["name"])
 
+lastest_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
+lastest_close = parsed_response["Time Series (Daily)"]["2019-02-22"]["4. close"]
 
+import datetime
+x = datetime.datetime.now ()
 
-
-
-
-
-
-
-
-
-
-
+def to_usd(my_price):
+    return "${0:,.2f}".format(my_price)
 
 
 print("-------------------------")
 print("SELECTED SYMBOL: XYZ")
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
-print("REQUEST AT: 2018-02-20 02:00pm")
+print("REQUEST AT:", x)
 print("-------------------------")
-print("LATEST DAY: 2018-02-20")
-print("LATEST CLOSE: $100,000.00")
-print("RECENT HIGH: $101,000.00")
+print(f"LATEST DAY: {lastest_refreshed}")
+print(f"LATEST CLOSE: {to_usd(float(lastest_close))}")
+print("RECENT HIGH: $101,000.00") 
 print("RECENT LOW: $99,000.00")
 print("-------------------------")
 print("RECOMMENDATION: BUY!")
